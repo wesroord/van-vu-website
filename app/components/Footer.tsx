@@ -15,12 +15,12 @@ export default function Footer() {
           <div className="flex flex-col sm:flex-row items-center gap-4">
             <div className="flex gap-5">
               <a
-                href="https://www.instagram.com/van_vu_loempia/"
+                href="https://www.facebook.com/p/Loempias-Van-Vu-100080385738040/?locale=nl_NL"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-white/60 hover:text-white transition-colors"
               >
-                Instagram
+                Facebook
               </a>
               <a href="tel:+31611601486" className="text-white/60 hover:text-white transition-colors">
                 Bel ons

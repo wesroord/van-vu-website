@@ -92,12 +92,12 @@ export default function Agenda() {
         <p data-animate="fade-up" className="text-center text-white/25 text-xs mt-8 md:mt-10 tracking-wide">
           Volg ons op{" "}
           <a
-            href="https://www.instagram.com/van_vu_loempia/"
+            href="https://www.facebook.com/p/Loempias-Van-Vu-100080385738040/?locale=nl_NL"
             target="_blank"
             rel="noopener noreferrer"
             className="text-[#f0a500]/70 hover:text-[#f0a500] transition-colors underline underline-offset-2"
           >
-            Instagram
+            Facebook
           </a>{" "}
           voor actuele updates en speciale locaties.
         </p>
