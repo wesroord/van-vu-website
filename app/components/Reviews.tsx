@@ -63,7 +63,7 @@ export default function Reviews() {
         <p data-animate="fade-up" className="text-center text-white/25 text-xs mt-10 tracking-wide">
           Beoordeeld via{" "}
           <a
-            href="https://www.google.com/maps/place/Vietnamese+Loempia%27s+Speciaal+Van-Vu"
+            href="https://www.google.com/maps/place/Vietnamese+Loempia's+Speciaal+Van-Vu/@52.2613788,7.0058154,17z/data=!4m16!1m9!3m8!1s0x47b83d8aa20f7389:0x53f39e506b6abc0b!2sVietnamese+Loempia's+Speciaal+Van-Vu!8m2!3d52.2613755!4d7.0083903!9m1!1b1!16s%2Fg%2F11c4_tlm69!3m5!1s0x47b83d8aa20f7389:0x53f39e506b6abc0b!8m2!3d52.2613755!4d7.0083903!16s%2Fg%2F11c4_tlm69?entry=ttu"
             target="_blank"
             rel="noopener noreferrer"
             className="text-[#f0a500]/70 hover:text-[#f0a500] transition-colors underline underline-offset-2"
