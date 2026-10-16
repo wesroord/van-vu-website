@@ -1,3 +1,5 @@
+"use client";
+import { useState } from "react";
 import AnimateIn from "./AnimateIn";
 
 const contacts = [
@@ -12,12 +14,12 @@ const contacts = [
     ),
   },
   {
-    label: "Website",
-    value: "www.van-vu.nl",
-    href: "https://www.van-vu.nl",
+    label: "E-mail",
+    value: "info@van-vu.nl",
+    href: "mailto:info@van-vu.nl",
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-5 h-5">
-        <path strokeLinecap="round" strokeLinejoin="round" d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0112 16.5a17.92 17.92 0 01-8.716-2.247m0 0A9.015 9.015 0 013 12c0-1.605.42-3.113 1.157-4.418" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
       </svg>
     ),
   },
@@ -35,70 +37,218 @@ const contacts = [
   },
 ];
 
+const subjects = [
+  "Festival of evenement",
+  "Bedrijfsevenement",
+  "Privé-evenement (bruiloft, verjaardag, etc.)",
+  "Sporttoernooi",
+  "Weekmarkt of braderie",
+  "Anders",
+];
+
+type Status = "idle" | "sending" | "success" | "error";
+
 export default function Contact() {
+  const [form, setForm] = useState({
+    naam: "",
+    email: "",
+    telefoon: "",
+    onderwerp: "",
+    bericht: "",
+  });
+  const [status, setStatus] = useState<Status>("idle");
+
+  function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) {
+    setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  }
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    setStatus("sending");
+    try {
+      const res = await fetch("https://formsubmit.co/ajax/info@van-vu.nl", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          Naam: form.naam,
+          "E-mail": form.email,
+          Telefoon: form.telefoon || "—",
+          Onderwerp: form.onderwerp,
+          Bericht: form.bericht,
+          _subject: `Nieuwe aanvraag via website: ${form.onderwerp}`,
+        }),
+      });
+      if (res.ok) {
+        setStatus("success");
+        setForm({ naam: "", email: "", telefoon: "", onderwerp: "", bericht: "" });
+      } else {
+        setStatus("error");
+      }
+    } catch {
+      setStatus("error");
+    }
+  }
+
+  const inputClass =
+    "w-full bg-white/[0.04] border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder-white/25 focus:outline-none focus:border-[#c8102e]/60 focus:bg-white/[0.06] transition-all duration-200";
+
   return (
     <section id="contact" className="py-28 px-6 wave-pattern">
-      <AnimateIn className="max-w-4xl mx-auto">
+      <AnimateIn className="max-w-5xl mx-auto">
         <div className="text-center mb-16">
           <p data-animate="fade-up" className="text-[#f0a500] text-xs font-semibold tracking-[0.4em] uppercase mb-4">
             Contact
           </p>
           <h2 data-animate="fade-up" data-delay="100" className="text-4xl md:text-5xl font-black text-white">
-            VAN-VU boeken?
+            Neem contact op
           </h2>
           <p data-animate="fade-up" data-delay="200" className="text-white/45 mt-5 max-w-lg mx-auto text-sm leading-relaxed">
-            Organiseer jij een festival, markt of bedrijfsevenement? Neem contact op voor de mogelijkheden.
+            Wil je ons boeken voor een evenement of heb je een vraag? Stuur een bericht of neem direct contact op.
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-6">
-          <div className="space-y-3">
-            {contacts.map((c, i) => (
+        <div className="grid md:grid-cols-5 gap-8 items-start">
+          {/* Contact links */}
+          <div data-animate="fade-left" className="md:col-span-2 space-y-3">
+            {contacts.map((c) => (
               <a
                 key={c.label}
                 href={c.href}
-                data-animate="fade-left"
-                data-delay={String(i * 100)}
                 target={c.href.startsWith("http") ? "_blank" : undefined}
                 rel={c.href.startsWith("http") ? "noopener noreferrer" : undefined}
-                className="card-hover flex items-center gap-5 rounded-2xl border border-white/8 bg-white/[0.02] p-5 group"
+                className="card-hover flex items-center gap-4 rounded-2xl border border-white/8 bg-white/[0.02] p-5 group"
               >
-                <span className="text-white/30 group-hover:text-[#c8102e] transition-colors duration-300">
+                <span className="text-white/30 group-hover:text-[#c8102e] transition-colors duration-300 flex-shrink-0">
                   {c.icon}
                 </span>
                 <div>
                   <div className="text-white/30 text-xs tracking-wide">{c.label}</div>
-                  <div className="text-white font-semibold text-sm mt-0.5 group-hover:text-[#f0a500] transition-colors duration-300">
+                  <div className="text-white font-semibold text-sm mt-0.5 group-hover:text-[#f0a500] transition-colors duration-300 break-all">
                     {c.value}
                   </div>
                 </div>
               </a>
             ))}
-          </div>
 
-          <div
-            data-animate="fade-right"
-            data-delay="200"
-            className="card-hover rounded-2xl border border-[#c8102e]/20 bg-gradient-to-br from-[#c8102e]/8 to-transparent p-8 flex flex-col justify-center"
-          >
-            <h3 className="text-xl font-black text-white mb-3">
-              Evenement organisator?
-            </h3>
-            <p className="text-white/45 text-sm leading-relaxed mb-8">
-              We zijn beschikbaar voor festivals, weekmarkten, bedrijfsfeesten en andere evenementen. Neem vrijblijvend contact op via WhatsApp.
-            </p>
             <a
-              href="https://wa.me/31611601486?text=Hallo%20VAN-VU%2C%20ik%20wil%20jullie%20graag%20boeken%20voor..."
+              href="https://wa.me/31611601486?text=Hallo%20VAN-VU%2C%20ik%20heb%20een%20vraag..."
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-2.5 px-6 py-3.5 bg-[#c8102e] text-white font-semibold text-sm tracking-wide rounded-full hover:bg-[#a00d25] transition-all duration-300 hover:scale-105 hover:shadow-[0_8px_30px_rgba(200,16,46,0.35)] self-start"
+              className="flex items-center justify-center gap-2.5 w-full mt-2 px-6 py-3.5 bg-[#c8102e] text-white font-semibold text-sm tracking-wide rounded-full hover:bg-[#a00d25] transition-all duration-300 hover:scale-105 hover:shadow-[0_8px_30px_rgba(200,16,46,0.35)]"
             >
               <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
                 <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
                 <path d="M12 0C5.373 0 0 5.373 0 12c0 2.125.557 4.118 1.528 5.845L0 24l6.335-1.652A11.954 11.954 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.007-1.373l-.36-.213-3.76.986 1.003-3.654-.234-.376A9.782 9.782 0 012.182 12C2.182 6.57 6.57 2.182 12 2.182c5.43 0 9.818 4.388 9.818 9.818 0 5.43-4.388 9.818-9.818 9.818z"/>
               </svg>
-              Stuur een WhatsApp
+              Direct WhatsApp
             </a>
+          </div>
+
+          {/* Contact form */}
+          <div data-animate="fade-right" data-delay="100" className="md:col-span-3">
+            <div className="rounded-2xl border border-white/8 bg-white/[0.02] p-8">
+              {status === "success" ? (
+                <div className="text-center py-12">
+                  <div className="w-14 h-14 rounded-full bg-[#c8102e]/10 border border-[#c8102e]/30 flex items-center justify-center mx-auto mb-5">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-6 h-6 text-[#c8102e]">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                    </svg>
+                  </div>
+                  <h3 className="text-white font-bold text-lg mb-2">Bericht verstuurd</h3>
+                  <p className="text-white/45 text-sm">We nemen zo snel mogelijk contact met je op.</p>
+                  <button
+                    onClick={() => setStatus("idle")}
+                    className="mt-6 text-[#f0a500]/70 hover:text-[#f0a500] text-sm transition-colors"
+                  >
+                    Nieuw bericht sturen
+                  </button>
+                </div>
+              ) : (
+                <form onSubmit={handleSubmit} className="space-y-4">
+                  <div className="grid sm:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-white/40 text-xs tracking-wide mb-1.5">Naam *</label>
+                      <input
+                        name="naam"
+                        value={form.naam}
+                        onChange={handleChange}
+                        required
+                        placeholder="Jan de Vries"
+                        className={inputClass}
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-white/40 text-xs tracking-wide mb-1.5">E-mailadres *</label>
+                      <input
+                        name="email"
+                        type="email"
+                        value={form.email}
+                        onChange={handleChange}
+                        required
+                        placeholder="jan@voorbeeld.nl"
+                        className={inputClass}
+                      />
+                    </div>
+                  </div>
+
+                  <div className="grid sm:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-white/40 text-xs tracking-wide mb-1.5">Telefoonnummer</label>
+                      <input
+                        name="telefoon"
+                        type="tel"
+                        value={form.telefoon}
+                        onChange={handleChange}
+                        placeholder="06 – 00 00 00 00"
+                        className={inputClass}
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-white/40 text-xs tracking-wide mb-1.5">Onderwerp *</label>
+                      <select
+                        name="onderwerp"
+                        value={form.onderwerp}
+                        onChange={handleChange}
+                        required
+                        className={inputClass + " cursor-pointer"}
+                      >
+                        <option value="" disabled>Selecteer een onderwerp</option>
+                        {subjects.map((s) => (
+                          <option key={s} value={s} className="bg-[#1a1a1a]">{s}</option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="block text-white/40 text-xs tracking-wide mb-1.5">Bericht *</label>
+                    <textarea
+                      name="bericht"
+                      value={form.bericht}
+                      onChange={handleChange}
+                      required
+                      rows={5}
+                      placeholder="Vertel ons over uw evenement: datum, locatie, verwacht aantal bezoekers..."
+                      className={inputClass + " resize-none"}
+                    />
+                  </div>
+
+                  {status === "error" && (
+                    <p className="text-[#c8102e] text-xs">
+                      Er ging iets mis. Probeer het opnieuw of mail direct naar info@van-vu.nl.
+                    </p>
+                  )}
+
+                  <button
+                    type="submit"
+                    disabled={status === "sending"}
+                    className="w-full py-3.5 bg-[#c8102e] text-white font-semibold text-sm tracking-wide rounded-full hover:bg-[#a00d25] transition-all duration-300 hover:shadow-[0_8px_30px_rgba(200,16,46,0.35)] disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    {status === "sending" ? "Verzenden..." : "Bericht versturen"}
+                  </button>
+                </form>
+              )}
+            </div>
           </div>
         </div>
       </AnimateIn>
