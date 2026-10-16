@@ -15,8 +15,8 @@ export default function Navbar() {
   const links = [
     { href: "#agenda", label: "Locaties" },
     { href: "#menu", label: "Menu" },
+    { href: "#catering", label: "Catering" },
     { href: "#reviews", label: "Reviews" },
-    { href: "#over-ons", label: "Over ons" },
     { href: "#contact", label: "Contact" },
   ];
 

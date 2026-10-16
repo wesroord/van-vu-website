@@ -111,4 +111,13 @@ export const menuItems = [
     description:
       "Sappige, geroosterde Japanse dumplings met een krokant korstje. Geserveerd met sojasaus.",
   },
+  {
+    name: "Frisdrank",
+    variants: [
+      { label: "Cola / Fanta / Sprite", price: "€ 2,00" },
+      { label: "Water", price: "€ 1,50" },
+    ],
+    description:
+      "Gekoelde frisdranken en water. Perfect bij een loempia of gyoza.",
+  },
 ];
