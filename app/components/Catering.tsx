@@ -85,14 +85,18 @@ export default function Catering() {
           </div>
         </div>
 
-        {/* Event types grid */}
-        <div className="grid sm:grid-cols-2 gap-3 sm:gap-4 mb-10 md:mb-16">
+        {/* Event types — sticky stack on mobile, 2-col grid on desktop */}
+        <div className="flex flex-col sm:grid sm:grid-cols-2 sm:gap-4 mb-10 md:mb-16">
           {eventTypes.map((type, i) => (
             <div
               key={type.title}
               data-animate="fade-up"
               data-delay={String(i * 80)}
-              className="card-hover rounded-2xl border border-white/8 bg-white/[0.02] p-5 sm:p-6"
+              className="sticky sm:static mb-3 sm:mb-0 last:mb-0 card-hover rounded-2xl border border-white/10 bg-[#141414] sm:bg-white/[0.02] p-5 sm:p-6 shadow-[0_8px_32px_rgba(0,0,0,0.6)] sm:shadow-none"
+              style={{
+                top: `${68 + i * 18}px`,
+                zIndex: 20 + i,
+              }}
             >
               <div className="w-8 h-px bg-[#c8102e] mb-4" />
               <h3 className="text-white font-bold text-base mb-2">{type.title}</h3>
