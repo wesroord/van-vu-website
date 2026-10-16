@@ -37,8 +37,8 @@ export default function Reviews() {
         </div>
 
         {/* Scrolling marquee */}
-        <div data-animate="fade-up" data-delay="200" className="overflow-hidden -mx-4 sm:-mx-6">
-          <div className="marquee-track flex gap-4 sm:gap-5 px-4 sm:px-6" style={{ width: "max-content" }}>
+        <div data-animate="fade-up" data-delay="200" className="overflow-hidden w-full">
+          <div className="marquee-track flex gap-4 sm:gap-5" style={{ width: "max-content" }}>
             {[...reviews, ...reviews].map((review, i) => (
               <div
                 key={i}
