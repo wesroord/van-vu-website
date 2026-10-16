@@ -1,114 +1,107 @@
 "use client";
 import { useState, useEffect } from "react";
-import { upcomingLocations, type Location } from "../data/locations";
+import { weeklySchedule } from "../data/locations";
+import AnimateIn from "./AnimateIn";
 
-function formatDate(dateStr: string) {
-  const date = new Date(dateStr);
-  return date.toLocaleDateString("nl-NL", {
-    weekday: "long",
-    day: "numeric",
-    month: "long",
-  });
-}
+const dayMap: Record<string, number> = {
+  monday: 1, tuesday: 2, wednesday: 3, thursday: 4,
+  friday: 5, saturday: 6, sunday: 0,
+};
 
-function AgendaItems({ upcoming }: { upcoming: Location[] }) {
-  if (upcoming.length === 0) {
-    return (
-      <div className="text-center py-16 text-white/40">
-        <p className="text-5xl mb-4">🥟</p>
-        <p>Momenteel geen evenementen gepland. Volg ons op Instagram voor updates!</p>
-      </div>
-    );
-  }
-
-  return (
-    <div className="space-y-4">
-      {upcoming.map((loc, i) => (
-        <div
-          key={loc.id}
-          className={`group relative rounded-2xl border transition-all hover:border-[#c8102e]/50 hover:bg-[#c8102e]/5 ${
-            i === 0
-              ? "border-[#f0a500]/40 bg-[#f0a500]/5"
-              : "border-white/10 bg-white/3"
-          } p-6`}
-        >
-          {i === 0 && (
-            <span className="absolute top-4 right-4 px-3 py-1 bg-[#f0a500] text-black text-xs font-bold rounded-full">
-              Eerstvolgende
-            </span>
-          )}
-          <div className="flex flex-col sm:flex-row sm:items-center gap-4">
-            <div className="flex-shrink-0 text-center sm:text-left sm:w-32">
-              <div className={`text-2xl font-black ${i === 0 ? "text-[#f0a500]" : "text-[#c8102e]"}`}>
-                {new Date(loc.date).getDate()}
-              </div>
-              <div className="text-white/50 text-xs uppercase tracking-wide">
-                {new Date(loc.date).toLocaleDateString("nl-NL", { month: "short" })}
-              </div>
-            </div>
-
-            <div className="flex-1 min-w-0">
-              <h3 className="font-bold text-lg text-white">{loc.event}</h3>
-              <p className="text-white/60 text-sm mt-1">📍 {loc.address}</p>
-              {loc.description && (
-                <p className="text-white/40 text-sm mt-1">{loc.description}</p>
-              )}
-            </div>
-
-            <div className="text-right flex-shrink-0">
-              <div className="text-white font-semibold text-sm">{loc.time}</div>
-              <div className="text-white/40 text-xs capitalize mt-1">
-                {formatDate(loc.date).split(",")[0]}
-              </div>
-            </div>
-          </div>
-        </div>
-      ))}
-    </div>
-  );
+function getTodayDay() {
+  return new Date().getDay();
 }
 
 export default function Agenda() {
-  const [upcoming, setUpcoming] = useState<Location[]>([]);
+  const [today, setToday] = useState(-1);
 
   useEffect(() => {
-    const today = new Date(new Date().toDateString());
-    const sorted = [...upcomingLocations]
-      .filter((l) => new Date(l.date) >= today)
-      .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
-    setUpcoming(sorted);
+    setToday(getTodayDay());
   }, []);
 
   return (
-    <section id="agenda" className="py-24 px-6 wave-pattern">
-      <div className="max-w-4xl mx-auto">
-        <div className="text-center mb-14">
-          <p className="text-[#f0a500] text-xs font-semibold tracking-[0.3em] uppercase mb-3">
-            Agenda
+    <section id="agenda" className="py-28 px-6 wave-pattern">
+      <AnimateIn className="max-w-5xl mx-auto">
+        <div className="text-center mb-16">
+          <p data-animate="fade-up" className="text-[#f0a500] text-xs font-semibold tracking-[0.4em] uppercase mb-4">
+            Wekelijks schema
           </p>
-          <h2 className="text-4xl md:text-5xl font-black text-white">
-            Waar vind je ons?
+          <h2 data-animate="fade-up" data-delay="100" className="text-4xl md:text-5xl font-black text-white underline-reveal inline-block">
+            Waar staan wij?
           </h2>
-          <p className="text-white/50 mt-4 max-w-md mx-auto">
-            We staan altijd op een andere locatie. Hier zie je waar je ons de komende tijd kunt vinden.
+          <p data-animate="fade-up" data-delay="200" className="text-white/45 mt-5 max-w-md mx-auto text-sm leading-relaxed">
+            VAN-VU staat wekelijks op vaste locaties door de regio. Kom langs op een markt bij jou in de buurt.
           </p>
         </div>
 
-        <AgendaItems upcoming={upcoming} />
+        <div className="grid gap-4">
+          {weeklySchedule.map((day, dayIdx) => {
+            const isToday = dayMap[day.day] === today;
+            return (
+              <div
+                key={day.day}
+                data-animate="fade-up"
+                data-delay={String(dayIdx * 80)}
+                className={`card-hover rounded-2xl border p-6 md:p-8 ${
+                  isToday
+                    ? "border-[#f0a500]/50 bg-[#f0a500]/6"
+                    : "border-white/8 bg-white/[0.02]"
+                }`}
+              >
+                <div className="flex flex-col md:flex-row md:items-start gap-6">
+                  <div className="md:w-36 flex-shrink-0">
+                    <div className="flex items-center gap-3">
+                      <span className={`text-lg font-black ${isToday ? "text-[#f0a500]" : "text-white/30"}`}>
+                        {day.dayNl}
+                      </span>
+                      {isToday && (
+                        <span className="px-2 py-0.5 bg-[#f0a500] text-black text-[10px] font-bold tracking-wide rounded-full uppercase">
+                          Vandaag
+                        </span>
+                      )}
+                    </div>
+                  </div>
 
-        <p className="text-center text-white/30 text-sm mt-8">
-          Agenda niet compleet? Volg ons op{" "}
+                  <div className="flex-1 grid sm:grid-cols-2 gap-3">
+                    {day.locations.map((loc) => (
+                      <div
+                        key={`${loc.name}-${loc.address}`}
+                        className="rounded-xl bg-white/3 border border-white/6 p-4 hover:border-[#c8102e]/30 transition-colors duration-300"
+                      >
+                        <div className="flex items-start justify-between gap-2">
+                          <div>
+                            <p className="text-white font-semibold text-sm">{loc.name}</p>
+                            <p className="text-white/45 text-xs mt-0.5">{loc.address}</p>
+                          </div>
+                          {loc.alternating && (
+                            <span className="text-white/30 text-[9px] uppercase tracking-wide border border-white/15 rounded px-1.5 py-0.5 flex-shrink-0">
+                              Om de week
+                            </span>
+                          )}
+                        </div>
+                        <p className="text-[#f0a500] text-xs font-medium mt-3">{loc.time}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+        <p data-animate="fade-up" className="text-center text-white/25 text-xs mt-10 tracking-wide">
+          Volg ons op{" "}
           <a
             href="https://www.instagram.com/van_vu_loempia/"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-[#f0a500] hover:text-white transition-colors"
+            className="text-[#f0a500]/70 hover:text-[#f0a500] transition-colors underline underline-offset-2"
           >
             Instagram
           </a>{" "}
-          voor de laatste updates.
+          voor actuele updates en speciale locaties.
         </p>
-      </div>
+      </AnimateIn>
     </section>
   );
 }

@@ -13,8 +13,9 @@ export default function Navbar() {
   }, []);
 
   const links = [
-    { href: "#agenda", label: "Agenda" },
+    { href: "#agenda", label: "Locaties" },
     { href: "#menu", label: "Menu" },
+    { href: "#reviews", label: "Reviews" },
     { href: "#over-ons", label: "Over ons" },
     { href: "#contact", label: "Contact" },
   ];
