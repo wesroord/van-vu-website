@@ -28,7 +28,7 @@ export default function Hero() {
   }, []);
 
   return (
-    <section ref={heroRef} className="relative min-h-screen flex items-center justify-center overflow-hidden wave-pattern">
+    <section ref={heroRef} className="relative min-h-[100svh] flex items-center justify-center overflow-hidden wave-pattern">
       {/* Parallax background */}
       {images.map((img, i) => (
         <div
@@ -52,21 +52,21 @@ export default function Hero() {
       <div className="absolute inset-0 bg-gradient-to-r from-black/30 via-transparent to-black/30" />
 
       {/* Content */}
-      <div className="relative z-10 text-center px-6 max-w-4xl mx-auto">
+      <div className="relative z-10 text-center px-5 max-w-4xl mx-auto w-full">
         <p
-          className={`text-[#f0a500] text-xs font-semibold tracking-[0.4em] uppercase mb-8 title-glow transition-all duration-1000 ${loaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
+          className={`text-[#f0a500] text-[10px] sm:text-xs font-semibold tracking-[0.3em] sm:tracking-[0.4em] uppercase mb-5 sm:mb-8 title-glow transition-all duration-1000 ${loaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
           style={{ transitionDelay: "0.2s" }}
         >
           Authentieke Vietnamese streetfood
         </p>
 
         <h1
-          className={`font-black leading-none mb-6 transition-all duration-1000 ${loaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}
+          className={`font-black leading-none mb-4 sm:mb-6 transition-all duration-1000 ${loaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}
           style={{ transitionDelay: "0.4s" }}
         >
-          <span className="block text-white text-[clamp(4rem,14vw,10rem)] tracking-tight">VAN</span>
+          <span className="block text-white text-[clamp(3rem,13vw,10rem)] tracking-tight">VAN</span>
           <span
-            className="block text-[#c8102e] text-[clamp(4rem,14vw,10rem)] tracking-tight"
+            className="block text-[#c8102e] text-[clamp(3rem,13vw,10rem)] tracking-tight"
             style={{ textShadow: "0 0 60px rgba(200,16,46,0.4)" }}
           >
             -VU-
@@ -74,25 +74,25 @@ export default function Hero() {
         </h1>
 
         <p
-          className={`text-white/60 text-xl font-light italic mb-12 transition-all duration-1000 ${loaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
+          className={`text-white/60 text-base sm:text-xl font-light italic mb-8 sm:mb-12 transition-all duration-1000 ${loaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
           style={{ transitionDelay: "0.6s" }}
         >
           Vietnamese loempia&apos;s
         </p>
 
         <div
-          className={`flex flex-col sm:flex-row gap-4 justify-center transition-all duration-1000 ${loaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
+          className={`flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center transition-all duration-1000 ${loaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
           style={{ transitionDelay: "0.8s" }}
         >
           <a
             href="#agenda"
-            className="group px-8 py-4 bg-[#c8102e] text-white font-semibold text-sm tracking-widest uppercase rounded-full transition-all duration-300 hover:bg-[#a00d25] hover:scale-105 hover:shadow-[0_8px_30px_rgba(200,16,46,0.4)]"
+            className="px-7 py-3.5 sm:px-8 sm:py-4 bg-[#c8102e] text-white font-semibold text-sm tracking-widest uppercase rounded-full transition-all duration-300 hover:bg-[#a00d25] hover:scale-105 hover:shadow-[0_8px_30px_rgba(200,16,46,0.4)]"
           >
             Waar staan wij?
           </a>
           <a
             href="#menu"
-            className="px-8 py-4 border border-white/25 text-white/80 font-semibold text-sm tracking-widest uppercase rounded-full transition-all duration-300 hover:border-white/60 hover:text-white hover:bg-white/8"
+            className="px-7 py-3.5 sm:px-8 sm:py-4 border border-white/25 text-white/80 font-semibold text-sm tracking-widest uppercase rounded-full transition-all duration-300 hover:border-white/60 hover:text-white hover:bg-white/8"
           >
             Bekijk het menu
           </a>
@@ -100,7 +100,7 @@ export default function Hero() {
       </div>
 
       {/* Slide indicators */}
-      <div className="absolute bottom-10 left-0 right-0 flex justify-center gap-2 z-10">
+      <div className="absolute bottom-8 sm:bottom-10 left-0 right-0 flex justify-center gap-2 z-10">
         {images.map((_, i) => (
           <button
             key={i}
@@ -111,9 +111,12 @@ export default function Hero() {
         ))}
       </div>
 
-      {/* Scroll indicator */}
-      <div className={`absolute bottom-10 right-8 flex flex-col items-center gap-2 transition-all duration-1000 ${loaded ? "opacity-40" : "opacity-0"}`} style={{ transitionDelay: "1.2s" }}>
-        <span className="text-white text-[10px] tracking-[0.3em] uppercase rotate-90 origin-center" style={{ writingMode: "vertical-rl" }}>Scroll</span>
+      {/* Scroll indicator — desktop only */}
+      <div
+        className={`hidden sm:flex absolute bottom-10 right-8 flex-col items-center gap-2 transition-all duration-1000 ${loaded ? "opacity-40" : "opacity-0"}`}
+        style={{ transitionDelay: "1.2s" }}
+      >
+        <span className="text-white text-[10px] tracking-[0.3em] uppercase" style={{ writingMode: "vertical-rl" }}>Scroll</span>
         <div className="w-px h-10 bg-gradient-to-b from-white/0 to-white/60 animate-pulse" />
       </div>
 

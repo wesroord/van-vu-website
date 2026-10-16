@@ -20,13 +20,13 @@ export default function Agenda() {
   }, []);
 
   return (
-    <section id="agenda" className="py-28 px-6 wave-pattern">
+    <section id="agenda" className="py-16 md:py-28 px-4 sm:px-6 wave-pattern">
       <AnimateIn className="max-w-5xl mx-auto">
-        <div className="text-center mb-16">
+        <div className="text-center mb-10 md:mb-16">
           <p data-animate="fade-up" className="text-[#f0a500] text-xs font-semibold tracking-[0.4em] uppercase mb-4">
             Wekelijks schema
           </p>
-          <h2 data-animate="fade-up" data-delay="100" className="text-4xl md:text-5xl font-black text-white underline-reveal inline-block">
+          <h2 data-animate="fade-up" data-delay="100" className="text-3xl sm:text-4xl md:text-5xl font-black text-white underline-reveal inline-block">
             Waar staan wij?
           </h2>
           <p data-animate="fade-up" data-delay="200" className="text-white/45 mt-5 max-w-md mx-auto text-sm leading-relaxed">
@@ -34,7 +34,7 @@ export default function Agenda() {
           </p>
         </div>
 
-        <div className="grid gap-4">
+        <div className="grid gap-3 md:gap-4">
           {weeklySchedule.map((day, dayIdx) => {
             const isToday = dayMap[day.day] === today;
             return (
@@ -42,16 +42,16 @@ export default function Agenda() {
                 key={day.day}
                 data-animate="fade-up"
                 data-delay={String(dayIdx * 80)}
-                className={`card-hover rounded-2xl border p-6 md:p-8 ${
+                className={`card-hover rounded-2xl border p-4 sm:p-6 md:p-8 ${
                   isToday
                     ? "border-[#f0a500]/50 bg-[#f0a500]/6"
                     : "border-white/8 bg-white/[0.02]"
                 }`}
               >
-                <div className="flex flex-col md:flex-row md:items-start gap-6">
+                <div className="flex flex-col md:flex-row md:items-start gap-4 md:gap-6">
                   <div className="md:w-36 flex-shrink-0">
                     <div className="flex items-center gap-3">
-                      <span className={`text-lg font-black ${isToday ? "text-[#f0a500]" : "text-white/30"}`}>
+                      <span className={`text-base sm:text-lg font-black ${isToday ? "text-[#f0a500]" : "text-white/30"}`}>
                         {day.dayNl}
                       </span>
                       {isToday && (
@@ -62,11 +62,11 @@ export default function Agenda() {
                     </div>
                   </div>
 
-                  <div className="flex-1 grid sm:grid-cols-2 gap-3">
+                  <div className="flex-1 grid sm:grid-cols-2 gap-2 sm:gap-3">
                     {day.locations.map((loc) => (
                       <div
                         key={`${loc.name}-${loc.address}`}
-                        className="rounded-xl bg-white/3 border border-white/6 p-4 hover:border-[#c8102e]/30 transition-colors duration-300"
+                        className="rounded-xl bg-white/3 border border-white/6 p-3 sm:p-4 hover:border-[#c8102e]/30 transition-colors duration-300"
                       >
                         <div className="flex items-start justify-between gap-2">
                           <div>
@@ -79,7 +79,7 @@ export default function Agenda() {
                             </span>
                           )}
                         </div>
-                        <p className="text-[#f0a500] text-xs font-medium mt-3">{loc.time}</p>
+                        <p className="text-[#f0a500] text-xs font-medium mt-2 sm:mt-3">{loc.time}</p>
                       </div>
                     ))}
                   </div>
@@ -89,7 +89,7 @@ export default function Agenda() {
           })}
         </div>
 
-        <p data-animate="fade-up" className="text-center text-white/25 text-xs mt-10 tracking-wide">
+        <p data-animate="fade-up" className="text-center text-white/25 text-xs mt-8 md:mt-10 tracking-wide">
           Volg ons op{" "}
           <a
             href="https://www.instagram.com/van_vu_loempia/"

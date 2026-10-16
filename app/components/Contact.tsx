@@ -50,11 +50,7 @@ type Status = "idle" | "sending" | "success" | "error";
 
 export default function Contact() {
   const [form, setForm] = useState({
-    naam: "",
-    email: "",
-    telefoon: "",
-    onderwerp: "",
-    bericht: "",
+    naam: "", email: "", telefoon: "", onderwerp: "", bericht: "",
   });
   const [status, setStatus] = useState<Status>("idle");
 
@@ -93,13 +89,13 @@ export default function Contact() {
     "w-full bg-white/[0.04] border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder-white/25 focus:outline-none focus:border-[#c8102e]/60 focus:bg-white/[0.06] transition-all duration-200";
 
   return (
-    <section id="contact" className="py-28 px-6 wave-pattern">
+    <section id="contact" className="py-16 md:py-28 px-4 sm:px-6 wave-pattern">
       <AnimateIn className="max-w-5xl mx-auto">
-        <div className="text-center mb-16">
+        <div className="text-center mb-10 md:mb-16">
           <p data-animate="fade-up" className="text-[#f0a500] text-xs font-semibold tracking-[0.4em] uppercase mb-4">
             Contact
           </p>
-          <h2 data-animate="fade-up" data-delay="100" className="text-4xl md:text-5xl font-black text-white">
+          <h2 data-animate="fade-up" data-delay="100" className="text-3xl sm:text-4xl md:text-5xl font-black text-white">
             Neem contact op
           </h2>
           <p data-animate="fade-up" data-delay="200" className="text-white/45 mt-5 max-w-lg mx-auto text-sm leading-relaxed">
@@ -107,7 +103,7 @@ export default function Contact() {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-5 gap-8 items-start">
+        <div className="grid md:grid-cols-5 gap-6 md:gap-8 items-start">
           {/* Contact links */}
           <div data-animate="fade-left" className="md:col-span-2 space-y-3">
             {contacts.map((c) => (
@@ -116,14 +112,14 @@ export default function Contact() {
                 href={c.href}
                 target={c.href.startsWith("http") ? "_blank" : undefined}
                 rel={c.href.startsWith("http") ? "noopener noreferrer" : undefined}
-                className="card-hover flex items-center gap-4 rounded-2xl border border-white/8 bg-white/[0.02] p-5 group"
+                className="card-hover flex items-center gap-4 rounded-2xl border border-white/8 bg-white/[0.02] p-4 sm:p-5 group"
               >
                 <span className="text-white/30 group-hover:text-[#c8102e] transition-colors duration-300 flex-shrink-0">
                   {c.icon}
                 </span>
-                <div>
+                <div className="min-w-0">
                   <div className="text-white/30 text-xs tracking-wide">{c.label}</div>
-                  <div className="text-white font-semibold text-sm mt-0.5 group-hover:text-[#f0a500] transition-colors duration-300 break-all">
+                  <div className="text-white font-semibold text-sm mt-0.5 group-hover:text-[#f0a500] transition-colors duration-300 truncate">
                     {c.value}
                   </div>
                 </div>
@@ -146,9 +142,9 @@ export default function Contact() {
 
           {/* Contact form */}
           <div data-animate="fade-right" data-delay="100" className="md:col-span-3">
-            <div className="rounded-2xl border border-white/8 bg-white/[0.02] p-8">
+            <div className="rounded-2xl border border-white/8 bg-white/[0.02] p-5 sm:p-8">
               {status === "success" ? (
-                <div className="text-center py-12">
+                <div className="text-center py-10 sm:py-12">
                   <div className="w-14 h-14 rounded-full bg-[#c8102e]/10 border border-[#c8102e]/30 flex items-center justify-center mx-auto mb-5">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-6 h-6 text-[#c8102e]">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
@@ -168,50 +164,22 @@ export default function Contact() {
                   <div className="grid sm:grid-cols-2 gap-4">
                     <div>
                       <label className="block text-white/40 text-xs tracking-wide mb-1.5">Naam *</label>
-                      <input
-                        name="naam"
-                        value={form.naam}
-                        onChange={handleChange}
-                        required
-                        placeholder="Jan de Vries"
-                        className={inputClass}
-                      />
+                      <input name="naam" value={form.naam} onChange={handleChange} required placeholder="Jan de Vries" className={inputClass} />
                     </div>
                     <div>
                       <label className="block text-white/40 text-xs tracking-wide mb-1.5">E-mailadres *</label>
-                      <input
-                        name="email"
-                        type="email"
-                        value={form.email}
-                        onChange={handleChange}
-                        required
-                        placeholder="jan@voorbeeld.nl"
-                        className={inputClass}
-                      />
+                      <input name="email" type="email" value={form.email} onChange={handleChange} required placeholder="jan@voorbeeld.nl" className={inputClass} />
                     </div>
                   </div>
 
                   <div className="grid sm:grid-cols-2 gap-4">
                     <div>
                       <label className="block text-white/40 text-xs tracking-wide mb-1.5">Telefoonnummer</label>
-                      <input
-                        name="telefoon"
-                        type="tel"
-                        value={form.telefoon}
-                        onChange={handleChange}
-                        placeholder="06 – 00 00 00 00"
-                        className={inputClass}
-                      />
+                      <input name="telefoon" type="tel" value={form.telefoon} onChange={handleChange} placeholder="06 – 00 00 00 00" className={inputClass} />
                     </div>
                     <div>
                       <label className="block text-white/40 text-xs tracking-wide mb-1.5">Onderwerp *</label>
-                      <select
-                        name="onderwerp"
-                        value={form.onderwerp}
-                        onChange={handleChange}
-                        required
-                        className={inputClass + " cursor-pointer"}
-                      >
+                      <select name="onderwerp" value={form.onderwerp} onChange={handleChange} required className={inputClass + " cursor-pointer"}>
                         <option value="" disabled>Selecteer een onderwerp</option>
                         {subjects.map((s) => (
                           <option key={s} value={s} className="bg-[#1a1a1a]">{s}</option>
@@ -223,11 +191,7 @@ export default function Contact() {
                   <div>
                     <label className="block text-white/40 text-xs tracking-wide mb-1.5">Bericht *</label>
                     <textarea
-                      name="bericht"
-                      value={form.bericht}
-                      onChange={handleChange}
-                      required
-                      rows={5}
+                      name="bericht" value={form.bericht} onChange={handleChange} required rows={5}
                       placeholder="Vertel ons over uw evenement: datum, locatie, verwacht aantal bezoekers..."
                       className={inputClass + " resize-none"}
                     />

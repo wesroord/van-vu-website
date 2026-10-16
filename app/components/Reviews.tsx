@@ -20,13 +20,13 @@ function Stars({ rating }: { rating: number }) {
 
 export default function Reviews() {
   return (
-    <section id="reviews" className="py-28 px-6 wave-pattern overflow-hidden">
+    <section id="reviews" className="py-16 md:py-28 px-4 sm:px-6 wave-pattern overflow-hidden">
       <AnimateIn className="max-w-6xl mx-auto">
-        <div className="text-center mb-16">
+        <div className="text-center mb-10 md:mb-16">
           <p data-animate="fade-up" className="text-[#f0a500] text-xs font-semibold tracking-[0.4em] uppercase mb-4">
             Wat klanten zeggen
           </p>
-          <h2 data-animate="fade-up" data-delay="100" className="text-4xl md:text-5xl font-black text-white">
+          <h2 data-animate="fade-up" data-delay="100" className="text-3xl sm:text-4xl md:text-5xl font-black text-white">
             Reviews
           </h2>
           <div data-animate="fade-up" data-delay="200" className="flex items-center justify-center gap-3 mt-5">
@@ -36,13 +36,13 @@ export default function Reviews() {
           </div>
         </div>
 
-        {/* Scrolling marquee row */}
-        <div data-animate="fade-up" data-delay="200" className="overflow-hidden -mx-6">
-          <div className="marquee-track flex gap-5 px-6" style={{ width: "max-content" }}>
+        {/* Scrolling marquee */}
+        <div data-animate="fade-up" data-delay="200" className="overflow-hidden -mx-4 sm:-mx-6">
+          <div className="marquee-track flex gap-4 sm:gap-5 px-4 sm:px-6" style={{ width: "max-content" }}>
             {[...reviews, ...reviews].map((review, i) => (
               <div
                 key={i}
-                className="w-80 flex-shrink-0 rounded-2xl border border-white/8 bg-white/[0.02] p-6"
+                className="w-72 sm:w-80 flex-shrink-0 rounded-2xl border border-white/8 bg-white/[0.02] p-5 sm:p-6"
               >
                 <div className="flex items-center justify-between mb-4">
                   <div>
@@ -60,7 +60,7 @@ export default function Reviews() {
           </div>
         </div>
 
-        <p data-animate="fade-up" className="text-center text-white/25 text-xs mt-10 tracking-wide">
+        <p data-animate="fade-up" className="text-center text-white/25 text-xs mt-8 md:mt-10 tracking-wide">
           Beoordeeld via{" "}
           <a
             href="https://www.google.com/maps/place/Vietnamese+Loempia's+Speciaal+Van-Vu/@52.2613788,7.0058154,17z/data=!4m16!1m9!3m8!1s0x47b83d8aa20f7389:0x53f39e506b6abc0b!2sVietnamese+Loempia's+Speciaal+Van-Vu!8m2!3d52.2613755!4d7.0083903!9m1!1b1!16s%2Fg%2F11c4_tlm69!3m5!1s0x47b83d8aa20f7389:0x53f39e506b6abc0b!8m2!3d52.2613755!4d7.0083903!16s%2Fg%2F11c4_tlm69?entry=ttu"
