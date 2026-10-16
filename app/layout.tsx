@@ -30,8 +30,8 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="nl" className={`${geist.variable} h-full overflow-x-hidden`}>
-      <body className="min-h-full bg-[#0d0d0d] text-[#f5f0eb] antialiased overflow-x-hidden">
+    <html lang="nl" className={`${geist.variable} h-full`}>
+      <body className="min-h-full bg-[#0d0d0d] text-[#f5f0eb] antialiased">
         <div className="w-full" style={{ overflowX: "clip" }}>
           {children}
         </div>
