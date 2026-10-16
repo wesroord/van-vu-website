@@ -36,7 +36,7 @@ body {
 
 /* Prevent horizontal overflow on all elements */
 *, *::before, *::after {
-  max-width: 100%;
+  box-sizing: border-box;
 }
 
 img, video {
@@ -149,6 +149,6 @@ a, button {
 }
 
 .marquee-track {
-  animation: marquee 24s linear infinite;
+  animation: marquee 14s linear infinite;
   white-space: nowrap;
 }
